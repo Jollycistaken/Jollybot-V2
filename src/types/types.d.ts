@@ -5,10 +5,10 @@ declare namespace JollyTypes {
     export interface clientOptions extends Discord.ClientOptions {
         commandsPath: string;
         eventsPath: string;
-    };
+    }
     interface Event<E extends keyof Discord.ClientEvents> {
         event: E;
-        run: (client: any, ...eventArgs: Discord.ClientEvents[E], commands: any) => void;
+        run: (client: any, ...eventArgs: Discord.ClientEvents[E]) => void;
 
     }
     interface Command<> {

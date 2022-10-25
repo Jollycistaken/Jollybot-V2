@@ -1,7 +1,7 @@
 import * as dotEnvExtended from "dotenv-extended";
 import * as discord from "discord.js";
 import {JollyTypes} from "./types/types";
-import { resolve, join } from "path";
+import { resolve } from "path";
 import { promisify } from "util";
 import * as globCB from "glob";
 
@@ -63,12 +63,18 @@ const start = async () => {
                     (await import(commandFilePath)).default ||
                     (await import(commandFilePath))
             ))) as JollyTypes.Event<keyof discord.ClientEvents>[];
+
         for (const event of events2) {
-            client.on(event.event, event.run.bind(null, client, commands))
+            if (event.event == "messageCreate") {
+                client.on(event.event, event.run.bind(null, client, commands))
+            } else if (event.event == "ready") {
+                client.on(event.event, event.run.bind(null, client, commands, events2))
+            } else {
+                client.on(event.event, event.run.bind(null, client))
+            }
         }
         return;
     }
     await setEvents()
-    console.log(commands)
 }
 start()
