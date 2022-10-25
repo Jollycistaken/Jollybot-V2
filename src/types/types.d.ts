@@ -10,7 +10,7 @@ declare namespace JollyTypes {
         event: E;
         run: (client: any, ...eventArgs: Discord.ClientEvents[E]) => void;
 
-    }
+    };
     interface Command<> {
         name: string;
         description?: string;
