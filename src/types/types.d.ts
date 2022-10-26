@@ -1,14 +1,16 @@
 
-import * as Discord from "discord.js";
+import * as discord from "discord.js";
 
 declare namespace JollyTypes {
     export interface clientOptions extends Discord.ClientOptions {
         commandsPath: string;
         eventsPath: string;
+        intents: discord.GatewayIntentBits[];
     }
+
     interface Event<E extends keyof Discord.ClientEvents> {
         event: E;
-        run: (client: any, ...eventArgs: Discord.ClientEvents[E]) => void;
+        run: (client: discord.Client<true>, ...eventArgs: discord.ClientEvents[E]) => void;
     }
     interface Command<> {
         name: string;
@@ -16,9 +18,9 @@ declare namespace JollyTypes {
         category: string;
         needsPermissions?: boolean;
         run: (
-            message: Discord.Message,
+            message: discord.Message,
             args: string[],
-            client: any
+            client: discord.Client<true>
         ) => void;
     }
 }

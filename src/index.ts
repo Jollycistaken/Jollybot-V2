@@ -33,7 +33,6 @@ const client = new discord.Client(
 );
 client.login(process.env["TOKEN"]);
 const commands = new discord.Collection<string, JollyTypes.Command>();
-const categories = new Array<string>();
 const start = async () => {
     const setCommands = async () => {
         let glob = promisify(globCB);
@@ -46,9 +45,6 @@ const start = async () => {
             ))) as JollyTypes.Command[];
         for (const command of commands2) {
             commands.set(command.name, command);
-            if (!categories.includes(command.category)) {
-                categories.push(command.category);
-            }
         }
         return
     }
