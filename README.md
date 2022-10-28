@@ -21,5 +21,5 @@ You are welcome to contribute to this bot, just make a fork and make your change
 
 # Credits
 
-Jollyc for making the bot lol
+Jollyc for making the bot lol \n
 Discord.js for making the module that I am using to interact with the discord api
