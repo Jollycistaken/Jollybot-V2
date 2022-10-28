@@ -15,7 +15,6 @@ export default {
         }
         function makeHelpEmbed(title) {
             let helpEmbed = new EmbedBuilder("Success")
-            helpEmbed.setColor(0x2ecc71)
             helpEmbed.setTitle(`${title}: `);
             commands.forEach( async (cmd) => {
                 if (cmd.category.toLowerCase() === title.toLowerCase()) {
