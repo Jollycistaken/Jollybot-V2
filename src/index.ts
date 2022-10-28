@@ -18,14 +18,9 @@ const config = {
 }
 
 console.clear();
-const mode = "dev";
-const env = {
-    dev: "dev.env",
-    prod: ".env"
-}
 
 dotEnvExtended.load({
-    path: env[mode],
+    path: ".env",
     errorOnRegex: true
 });
 const client = new discord.Client(
