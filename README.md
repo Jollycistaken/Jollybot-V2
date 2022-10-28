@@ -17,7 +17,7 @@ and just compile it with tsc
 
 # Contribution
 
-You are welcome to contribute to this bot, just make a fork and make your changes and do a pull request
+You are welcome to contribute to this bot, just make a fork and make your changes and do a pull request (please enable "Allow edits by maintainers")
 
 # Credits
 
