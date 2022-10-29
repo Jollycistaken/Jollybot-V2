@@ -8,12 +8,14 @@ This bot is still indev, commands are currently being made now due to the help c
 
 # Running
 
-You can just download the bot, make a .env file and put inside of it
-
-TOKEN="Your token" <br />
+1. You can just download the bot from this or use git clone <br />
+2. Make a .env file and put inside of it
+```
+TOKEN="Your token"
 PREFIX="the prefix"
-
-and just compile it with tsc
+```
+3. Run ```yarn install``` <br />
+4. Compile it with tsc
 
 # Contribution
 
