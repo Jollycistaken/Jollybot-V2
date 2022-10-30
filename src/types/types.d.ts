@@ -14,13 +14,17 @@ declare namespace JollyTypes {
     }
     interface Command<> {
         name: string;
+        path: string;
         description?: string;
         category: string;
         needsPermissions?: boolean;
+        permissionLevel?: string;
+        nsfw?: boolean;
         run: (
             message: discord.Message,
             args: string[],
-            client: discord.Client<true>
+            client: discord.Client<true>,
+            commands?: Map<string, any>
         ) => void;
     }
 }

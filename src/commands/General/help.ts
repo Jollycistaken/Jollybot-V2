@@ -1,12 +1,12 @@
 import * as discord from "discord.js"
 import { EmbedBuilder } from "../../structures/embed"
+import {JollyTypes} from "../../types/types";
 
 export default {
     name: "help",
     description: "The help command",
-    category: "Utility",
-    needsPermissions: false,
-    run: async (message: discord.Message, args: string[], client: discord.Client<true>, commands: Map<string, any>) => {
+    category: "General",
+    run: async (message: discord.Message, args: string[], client: discord.Client<true>, commands: discord.Collection<string, JollyTypes.Command>) => {
         const categories = new Array<string>();
         for (const [_, cmd] of commands) {
             if (!categories.includes(cmd.category)) {
@@ -27,7 +27,7 @@ export default {
             })
             return helpEmbed
         }
-        let currentEmbed = makeHelpEmbed(categories[0]);
+        let currentEmbed = makeHelpEmbed("General");
         const row = new discord.ActionRowBuilder<discord.SelectMenuBuilder>()
         const selectMenu = new discord.SelectMenuBuilder()
             .setCustomId(`helpmenuselect`)

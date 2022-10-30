@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "booru": "^2.6.3",
     "discord.js": "^14.6.0",
     "dotenv-extended": "^2.9.0",
     "glob": "^8.0.3",

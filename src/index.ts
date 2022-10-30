@@ -32,12 +32,20 @@ const start = async () => {
     const setCommands = async () => {
         let glob = promisify(globCB);
         const commandFiles = await glob(resolve(__dirname, "./", "./commands", "**", "*.{ts,js}"))
+        commandFiles.map(
+            async (filepath) => {
+                const real = (await import(filepath)).default ||
+                (await import(filepath))
+                real.path = filepath;
+            }
+        )
         const commands2 = (await Promise.all(
             commandFiles.map(
-                async (commandFilePath) =>
-                    (await import(commandFilePath)).default ||
+                async (commandFilePath) => (await import(commandFilePath)).default ||
                     (await import(commandFilePath))
+
             ))) as JollyTypes.Command[];
+
         for (const command of commands2) {
             commands.set(command.name, command);
         }
