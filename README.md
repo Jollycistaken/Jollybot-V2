@@ -14,7 +14,7 @@ This bot is still indev, commands are currently being made now due to the help c
 TOKEN="Your token"
 PREFIX="the prefix"
 ```
-3. Run npm install (I couldnt get yarn to install one package)
+3. Run yarn install
 4. Compile it with tsc
 
 # Contribution
