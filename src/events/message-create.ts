@@ -1,10 +1,11 @@
 import * as discord from "discord.js";
 import { JollyTypes } from "../types/types";
 import { EmbedBuilder } from "../structures/embed"
+import * as distube from "distube"
 
 export default {
     event: "messageCreate",
-    run: async (client: discord.Client<true>, commands: discord.Collection<string, JollyTypes.Command>, message: discord.Message<true>) => {
+    run: async (client: discord.Client<true>, commands: discord.Collection<string, JollyTypes.Command>, music: distube.DisTube, message: discord.Message<true>) => {
         const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         if (message.author.bot) return;
         if (!message.guild) return;
@@ -30,10 +31,13 @@ export default {
             }
         }
         try {
-            command.run(message, args, client, commands);
+            command.run(message, args, client, commands, music);
         } catch(error) {
             console.error(error);
-            await message.reply("Command has errored" + error);
+            const errorEmbed = new EmbedBuilder("Error")
+                .setTitle("Error!")
+                .setDescription(`Error: ${error}`)
+            return await message.reply({embeds: [errorEmbed]})
         }
     }
 }
