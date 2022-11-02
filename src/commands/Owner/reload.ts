@@ -1,6 +1,5 @@
 import * as discord from "discord.js"
 import { EmbedBuilder } from "../../structures/embed"
-import {JollyTypes} from "../../types/types";
 
 export default {
     name: "reload",
@@ -8,7 +7,8 @@ export default {
     category: "Owner",
     needsPermissions: true,
     permissionLevel: "Owner",
-    run: async (message: discord.Message, args: string[], client: discord.Client<true>, commands: discord.Collection<string, JollyTypes.Command>) => {
+    run: async (message: discord.Message, args: string[], client: discord.Client<true>) => {
+        const commands = client["commands"];
         if (!args || args.length < 1) {
             const reloadHelpEmbed = new EmbedBuilder()
                 .setTitle("Command: reload")
@@ -17,7 +17,7 @@ export default {
         }
         const cmdName = args[0];
         if (!(commands.has(cmdName))) {
-            return message.reply("Jolly, you are trippin");
+            return message.reply("You are trippin");
         }
         const cmdPath = commands.get(cmdName).path
         delete require.cache[require.resolve(cmdPath)];

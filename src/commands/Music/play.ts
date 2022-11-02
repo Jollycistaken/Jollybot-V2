@@ -1,12 +1,11 @@
 import * as discord from "discord.js"
 import { EmbedBuilder } from "../../structures/embed"
-import * as distube from "distube"
 
 export default {
     name: "play",
     description: "Play music",
     category: "Music",
-    run: async (message: discord.Message<true>, args: string[], client: discord.Client<true>, _, player: distube.DisTube) => {
+    run: async (message: discord.Message<true>, args: string[], client: discord.Client<true>) => {
         if (!args[0] || args[0]?.toLowerCase() === "help") {
             const playHelpEmbed = new EmbedBuilder()
                 .setTitle("Command: play")
@@ -21,8 +20,7 @@ export default {
         }
         const song = args.join(" ")
         try {
-
-            await player.play(message.member.voice.channel, song, {
+            await client["musicPlayer"].play(message.member.voice.channel, song, {
                 member: message.member,
                 textChannel: message.channel,
                 message

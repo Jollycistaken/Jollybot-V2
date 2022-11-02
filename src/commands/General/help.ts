@@ -1,13 +1,13 @@
 import * as discord from "discord.js"
 import { EmbedBuilder } from "../../structures/embed"
-import {JollyTypes} from "../../types/types";
 
 export default {
     name: "help",
     description: "The help command",
     category: "General",
-    run: async (message: discord.Message, args: string[], client: discord.Client<true>, commands: discord.Collection<string, JollyTypes.Command>) => {
+    run: async (message: discord.Message, args: string[], client: discord.Client<true>) => {
         const categories = new Array<string>();
+        const commands = client["commands"];
         for (const [_, cmd] of commands) {
             if (!categories.includes(cmd.category)) {
                 categories.push(cmd.category);

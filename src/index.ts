@@ -33,7 +33,7 @@ const client = new discord.Client(
     config as unknown as JollyTypes.clientOptions
 );
 client.login(process.env["TOKEN"]);
-const musicclient = new distube.DisTube(client, {
+client["musicPlayer"] = new distube.DisTube(client, {
     leaveOnStop: false,
     leaveOnFinish: true,
     leaveOnEmpty: true,
@@ -49,9 +49,7 @@ const musicclient = new distube.DisTube(client, {
     ],
 });
 
-const commands = new discord.Collection<string, JollyTypes.Command>();
-let tubeevents;
-let discordevents;
+client["commands"] = new discord.Collection<string, JollyTypes.Command>();
 const start = async () => {
     const setCommands = async () => {
         let glob = promisify(globCB);
@@ -71,7 +69,7 @@ const start = async () => {
             ))) as JollyTypes.Command[];
 
         for (const command of commands2) {
-            commands.set(command.name, command);
+            client["commands"].set(command.name, command);
         }
 
         return
@@ -87,9 +85,9 @@ const start = async () => {
                     (await import(commandFilePath))
             ))) as JollyTypes.tubeEvent<distube.Events>[];
         for (const event of events2) {
-            musicclient.on(event.event, event.run.bind(null))
+            client["musicPlayer"].on(event.event, event.run.bind(null))
         }
-        tubeevents = events2
+        client["musicEvents"] = events2
         return;
     }
 
@@ -103,17 +101,10 @@ const start = async () => {
                     (await import(commandFilePath)).default ||
                     (await import(commandFilePath))
             ))) as JollyTypes.Event<keyof discord.ClientEvents>[];
-
+        client["discordEvents"] = events2
         for (const event of events2) {
-            if (event.event == "messageCreate") {
-                client.on(event.event, event.run.bind(null, client, commands, musicclient))
-            } else if (event.event == "ready") {
-                client.on(event.event, event.run.bind(null, client, commands, events2, tubeevents))
-            } else {
-                client.on(event.event, event.run.bind(null, client))
-            }
+            client.on(event.event, event.run.bind(null, client))
         }
-        discordevents = events2
         return;
     }
     await setEvents()

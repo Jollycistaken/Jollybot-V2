@@ -1,11 +1,10 @@
 import * as discord from "discord.js";
 import { JollyTypes } from "../types/types";
 import { EmbedBuilder } from "../structures/embed"
-import * as distube from "distube"
 
 export default {
     event: "messageCreate",
-    run: async (client: discord.Client<true>, commands: discord.Collection<string, JollyTypes.Command>, music: distube.DisTube, message: discord.Message<true>) => {
+    run: async (client: discord.Client<true>, message: discord.Message<true>) => {
         const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         if (message.author.bot) return;
         if (!message.guild) return;
@@ -14,7 +13,7 @@ export default {
         const [, matchedPrefix] = message.content.match(prefixRegex);
         const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
         const commandName = args.shift().toLowerCase();
-        const command: JollyTypes.Command = commands.get(commandName);
+        const command: JollyTypes.Command = client["commands"].get(commandName);
         if (!command) return;
         if (command.nsfw && !(message.channel as discord.TextChannel).nsfw) {
             const nsfwEmbed = new EmbedBuilder("Error")
@@ -31,7 +30,7 @@ export default {
             }
         }
         try {
-            command.run(message, args, client, commands, music);
+            command.run(message, args, client);
         } catch(error) {
             console.error(error);
             const errorEmbed = new EmbedBuilder("Error")
