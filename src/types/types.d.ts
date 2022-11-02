@@ -30,8 +30,6 @@ declare namespace JollyTypes {
             message: discord.Message,
             args: string[],
             client: discord.Client<true>,
-            commands?: Map<string, any>,
-            music?: any
         ) => void;
     }
 }
