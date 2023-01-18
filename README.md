@@ -14,7 +14,7 @@ TOKEN="Your token"
 PREFIX="the prefix"
 OWNER="your discord id"
 ```
-5. Run `npm install -g sodium` (I couldnt get it to install if I used yarn)
+5. Run `npm install sodium` (I couldnt get it to install if I used yarn)
 6. Run `yarn install`
 7. Compile it with `tsc`
 
